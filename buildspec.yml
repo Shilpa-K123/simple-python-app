@@ -21,7 +21,7 @@ phases:
       - echo "Username: $DOCKER_REGISTRY_USERNAME"
       - echo "Password is set: ${DOCKER_REGISTRY_PASSWORD:+yes}"
       - echo "URL: $DOCKER_REGISTRY_URL"
-      - echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin
+      - echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY_URL"
       - docker build -t docker.io/manlineroot12/simple-python-flask-app:latest .
       - docker push docker.io/manlineroot12/simple-python-flask-app:latest
 
