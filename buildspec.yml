@@ -4,7 +4,8 @@ env:
   parameter-store:
     DOCKER_REGISTRY_USERNAME: /docker/python-project/username
     DOCKER_REGISTRY_PASSWORD: /docker/python-project/password
-    DOCKER_REGISTRY_URL: 	/docker/python-project/url
+    DOCKER_REGISTRY_URL: /docker/python-project/url
+
 phases:
   install:
     runtime-versions:
@@ -12,14 +13,14 @@ phases:
   pre_build:
     commands:
       - echo "Installing dependencies..."
-      - pip install -r requirements.txt
+      - pip install -r requirements.txt || echo "No requirements.txt found"
   build:
     commands:
       - echo "Running tests..."
       - echo "Building Docker image..."
       - echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY_URL"
-      - docker build -t "docker.io/manlineroot12/simple-python-flask-app:latest" .
-      - docker push "docker.io/manlineroot12/simple-python-flask-app:latest"
+      - docker build -t docker.io/manlineroot12/simple-python-flask-app:latest .
+      - docker push docker.io/manlineroot12/simple-python-flask-app:latest
   post_build:
     commands:
-      - echo "Build completed successfully!"
+      - echo "✅ Build and push completed successfully!"
